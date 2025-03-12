@@ -1,9 +1,10 @@
 
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { User, AuthContextType } from '@/types/auth';
+import { User, AuthContextType, CreditCard } from '@/types/auth';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import usersData from '@/data/users.json';
+import creditCardsData from '@/data/creditCards.json';
 
 // Default context value
 const defaultContextValue: AuthContextType = {
@@ -12,6 +13,7 @@ const defaultContextValue: AuthContextType = {
   signup: async () => false,
   logout: () => {},
   isAuthenticated: false,
+  startTrial: async () => false,
 };
 
 // Create context
@@ -28,6 +30,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [users, setUsers] = useState<User[]>(usersData);
+  const [creditCards, setCreditCards] = useState<CreditCard[]>(creditCardsData);
 
   // Load user from localStorage on mount
   useEffect(() => {
@@ -49,6 +52,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // In a real app, this would be a server API call
     localStorage.setItem('users', JSON.stringify(users));
   }, [users]);
+
+  // Save credit cards to localStorage (for demo only - in production this would be securely stored)
+  useEffect(() => {
+    // This is for demo only - in a real app, credit card data would NEVER be stored this way
+    localStorage.setItem('creditCards', JSON.stringify(creditCards));
+  }, [creditCards]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     // Load latest users from localStorage in case they've been updated elsewhere
@@ -101,6 +110,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       email,
       password, // In a real app, this would be hashed
       createdAt: new Date().toISOString(),
+      trialActive: false,
     };
 
     const updatedUsers = [...currentUsers, newUser];
@@ -120,6 +130,73 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return true;
   };
 
+  const startTrial = async (creditCardDetails: CreditCard): Promise<boolean> => {
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to start a trial",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    try {
+      // Store credit card info (in a real app, this would be securely handled and tokenized)
+      const newCreditCard = {
+        ...creditCardDetails,
+        userId: user.id,
+      };
+
+      // Get current credit cards
+      const storedCards = localStorage.getItem('creditCards');
+      const currentCards = storedCards ? JSON.parse(storedCards) : creditCards;
+      
+      // Add new card
+      const updatedCards = [...currentCards, newCreditCard];
+      setCreditCards(updatedCards);
+      localStorage.setItem('creditCards', JSON.stringify(updatedCards));
+
+      // Update user with trial information
+      const trialStartDate = new Date();
+      const trialEndDate = new Date();
+      trialEndDate.setDate(trialEndDate.getDate() + 30); // 30-day trial
+
+      const updatedUser = {
+        ...user,
+        trialActive: true,
+        trialStartDate: trialStartDate.toISOString(),
+        trialEndDate: trialEndDate.toISOString(),
+      };
+
+      // Update user in users array
+      const storedUsers = localStorage.getItem('users');
+      const currentUsers = storedUsers ? JSON.parse(storedUsers) : users;
+      const updatedUsers = currentUsers.map((u: User) => 
+        u.id === user.id ? updatedUser : u
+      );
+
+      setUsers(updatedUsers);
+      setUser(updatedUser);
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+      toast({
+        title: "Trial activated",
+        description: "Your 30-day free trial has been successfully activated!",
+      });
+
+      return true;
+    } catch (error) {
+      console.error('Error starting trial:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start your trial. Please try again.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
@@ -136,6 +213,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signup,
     logout,
     isAuthenticated,
+    startTrial,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
