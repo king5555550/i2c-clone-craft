@@ -1,7 +1,10 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import Button from '../ui/button-custom';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
   { name: 'Products', href: '#products' },
@@ -14,6 +17,7 @@ const navItems = [
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +58,24 @@ export const Navbar: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <Button>Get Started</Button>
+            
+            {isAuthenticated ? (
+              <Link to="/profile">
+                <Button variant="ghost" className="gap-2">
+                  <User size={18} />
+                  {user?.name?.split(' ')[0]}
+                </Button>
+              </Link>
+            ) : (
+              <div className="flex space-x-2">
+                <Link to="/login">
+                  <Button variant="outline">Login</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button>Sign Up</Button>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,8 +112,24 @@ export const Navbar: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8">
-                <Button className="w-full">Get Started</Button>
+              <div className="mt-8 space-y-4">
+                {isAuthenticated ? (
+                  <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button className="w-full gap-2">
+                      <User size={18} />
+                      My Profile
+                    </Button>
+                  </Link>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="outline" className="w-full">Login</Button>
+                    </Link>
+                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button className="w-full">Sign Up</Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
