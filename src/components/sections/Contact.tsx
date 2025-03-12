@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import FadeIn from '../animations/FadeIn';
 import SectionHeading from '../ui/SectionHeading';
-import Button from '../ui/Button';
+import Button from '../ui/button-custom';
 import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 
 interface ContactProps {

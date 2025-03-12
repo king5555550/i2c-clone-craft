@@ -1,8 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
-import Button from '../ui/Button';
+import Button from '../ui/button-custom';
 
 const navItems = [
   { name: 'Products', href: '#products' },

@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import FadeIn from '../animations/FadeIn';
-import Button from '../ui/Button';
+import Button from '../ui/button-custom';
 import { ArrowRight } from 'lucide-react';
 
 interface HeroProps {

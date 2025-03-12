@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Navbar from '@/components/navigation/Navbar';
 import Hero from '@/components/sections/Hero';
@@ -10,7 +9,7 @@ import FadeIn from '@/components/animations/FadeIn';
 import { Zap, Code, Share2, BarChart3 } from 'lucide-react';
 import AnimatedCard from '@/components/ui/AnimatedCard';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button-custom';
 
 const Index = () => {
   // Smooth scroll for anchor links
