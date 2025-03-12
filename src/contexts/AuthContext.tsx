@@ -141,10 +141,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     try {
-      // Store credit card info (in a real app, this would be securely handled and tokenized)
+      // In a real app, card details would be sent to a payment processor and tokenized
+      // We only store the tokenized version, not the actual card details
+      // For this demo, we're simply storing the raw data (NOT recommended in production)
+      
+      // Mask the card number for improved security (even in this demo)
+      const maskedCardNumber = `${'*'.repeat(12)}${creditCardDetails.cardNumber.slice(-4)}`;
+      const maskedCVV = '***';
+      
       const newCreditCard = {
         ...creditCardDetails,
         userId: user.id,
+        cardNumber: maskedCardNumber, // Store masked version in "database"
+        cvv: maskedCVV, // Store masked version in "database"
       };
 
       // Get current credit cards
