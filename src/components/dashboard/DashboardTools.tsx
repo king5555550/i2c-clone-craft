@@ -1,12 +1,10 @@
-
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button-custom';
 import { 
   BarChart, PieChart, DatabaseZap, Shield, 
-  Webhook, FileJson, Zap, CreditCard, 
-  FileAnalytics, Boxes, BadgeAlert, Workflow
+  Webhook, FileJson, Zap, CreditCard, Boxes, BadgeAlert, Workflow
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
