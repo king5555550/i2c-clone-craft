@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button-custom';
 import FadeIn from '@/components/animations/FadeIn';
+import DashboardTools from '@/components/dashboard/DashboardTools';
 import { 
   BarChart, CreditCard, Files, Home, LifeBuoy, 
   LogOut, PieChart, Plus, Settings, Users, Wallet,
@@ -171,7 +171,6 @@ const DashboardSidebar = () => {
     }
   };
 
-  // Calculate trial days remaining
   const getTrialDaysRemaining = () => {
     if (!user?.trialActive || !user?.trialEndDate) return 0;
     
@@ -463,7 +462,6 @@ const Dashboard = () => {
     );
   }
   
-  // Calculate trial days remaining if user has an active trial
   const getTrialDaysRemaining = () => {
     if (!user?.trialActive || !user?.trialEndDate) return 0;
     
@@ -539,7 +537,7 @@ const Dashboard = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
                 <div className="lg:col-span-2">
                   <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                     <div className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center">
@@ -692,6 +690,8 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
+              
+              <DashboardTools />
             </div>
           </FadeIn>
         </main>
@@ -701,3 +701,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

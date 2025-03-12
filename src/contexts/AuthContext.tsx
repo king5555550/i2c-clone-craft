@@ -51,12 +51,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     // In a real app, this would be a server API call
     localStorage.setItem('users', JSON.stringify(users));
+    
+    // Also update the data json files (for demonstration purposes only)
+    // In a real app, this would be handled by secure server-side code
+    try {
+      // This is simulating writing to json files
+      console.log('Updated users:', users);
+    } catch (error) {
+      console.error('Error updating users data file:', error);
+    }
   }, [users]);
 
   // Save credit cards to localStorage (for demo only - in production this would be securely stored)
   useEffect(() => {
     // This is for demo only - in a real app, credit card data would NEVER be stored this way
     localStorage.setItem('creditCards', JSON.stringify(creditCards));
+    
+    // Also update the data json files (for demonstration purposes only)
+    // In a real app, this would be handled by secure server-side code
+    try {
+      // This is simulating writing to json files
+      console.log('Updated credit cards:', creditCards);
+    } catch (error) {
+      console.error('Error updating credit cards data file:', error);
+    }
   }, [creditCards]);
 
   const login = async (email: string, password: string): Promise<boolean> => {

@@ -9,67 +9,31 @@ interface FooterProps {
   className?: string;
 }
 
-const footerLinks = [
-  {
-    title: 'Products',
-    links: [
-      { name: 'Payment Processing', href: '#' },
-      { name: 'Digital Banking', href: '#' },
-      { name: 'Card Management', href: '#' },
-      { name: 'Fraud Prevention', href: '#' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { name: 'About Us', href: '#' },
-      { name: 'Leadership', href: '#' },
-      { name: 'Careers', href: '#' },
-      { name: 'Contact', href: '#' },
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      { name: 'Blog', href: '#' },
-      { name: 'Documentation', href: '#' },
-      { name: 'Webinars', href: '#' },
-      { name: 'Support', href: '#' },
-    ],
-  },
-  {
-    title: 'Legal',
-    links: [
-      { name: 'Privacy Policy', href: '#' },
-      { name: 'Terms of Service', href: '#' },
-      { name: 'Security', href: '#' },
-      { name: 'Compliance', href: '#' },
-    ],
-  },
-];
-
-const socialLinks = [
-  { icon: <Facebook className="h-5 w-5" />, href: '#', label: 'Facebook' },
-  { icon: <Twitter className="h-5 w-5" />, href: '#', label: 'Twitter' },
-  { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
-  { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
-  { icon: <Youtube className="h-5 w-5" />, href: '#', label: 'YouTube' },
-];
+const companyInfo = {
+  description: 'Empowering financial innovators with next-generation payment and banking solutions that drive growth and transform customer experiences worldwide.',
+  socials: [
+    { icon: <Facebook className="h-5 w-5" />, href: '#', label: 'Facebook' },
+    { icon: <Twitter className="h-5 w-5" />, href: '#', label: 'Twitter' },
+    { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
+    { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
+    { icon: <Youtube className="h-5 w-5" />, href: '#', label: 'YouTube' },
+  ]
+};
 
 export const Footer: React.FC<FooterProps> = ({ className }) => {
   return (
     <footer className={cn('bg-accent pt-16 pb-8', className)}>
       <div className="responsive-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 mb-12">
           <div className="lg:col-span-2">
             <Link to="/" className="text-2xl font-bold inline-block mb-4">
               i2c<span className="text-primary">Inc</span>
             </Link>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Empowering financial innovators with next-generation payment and banking solutions that drive growth and transform customer experiences worldwide.
+              {companyInfo.description}
             </p>
             <div className="flex space-x-4">
-              {socialLinks.map((social) => (
+              {companyInfo.socials.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
@@ -82,23 +46,67 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
             </div>
           </div>
 
-          {footerLinks.map((column) => (
-            <div key={column.title}>
-              <h4 className="font-semibold text-foreground mb-4">{column.title}</h4>
-              <ul className="space-y-2">
-                {column.links.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                    >
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
+            <address className="not-italic text-muted-foreground space-y-2">
+              <p>123 Finance Street</p>
+              <p>San Francisco, CA 94103</p>
+              <p>support@i2cinc.com</p>
+              <p>+1 (800) 555-1234</p>
+            </address>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Security
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Compliance
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Support</h4>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  Documentation
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  API Reference
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  System Status
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
         
         <div className="mt-12 mb-8 border border-primary/10 bg-primary/5 rounded-xl overflow-hidden">
